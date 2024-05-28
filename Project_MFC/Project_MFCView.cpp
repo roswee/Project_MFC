@@ -123,7 +123,7 @@ void CProjectMFCView::OnDraw(CDC* pDC)
 	newbrush.DeleteObject();
 
 	DCOORD Coord(0, 0), mmin(min_x, min_y), mmax(max_x, max_y);
-
+	//
 	const int npoints = pDoc->pDat->size();
 
 	newpen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
