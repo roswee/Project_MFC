@@ -1,4 +1,3 @@
-
 // Project_MFCView.cpp : implementation of the CProjectMFCView class
 //
 
@@ -85,7 +84,31 @@ void CProjectMFCView::OnDraw(CDC* pDC)
 		return;
 
 	// TODO: add draw code for native data here
-	//Set mapping mode
+	MY_DATA* pData = pDoc->pDat;
+	COLORREF color = pDoc->GetColor();
+	int radius = pDoc->GetRadius();
+	bool lineType = pDoc->GetLineType();
+
+	CPen pen(PS_SOLID, 1, color);
+	CPen* pOldPen = pDC->SelectObject(&pen);
+
+	for (int i = 0; i < pData->size(); ++i)
+	{
+		MY_POINT point = (*pData)[i];
+		pDC->Ellipse(point.x - radius, point.y - radius, point.x + radius, point.y + radius);
+
+		// Optional: Draw lines between points if lineType is true
+		if (lineType && i > 0)
+		{
+			MY_POINT prevPoint = (*pData)[i - 1];
+			pDC->MoveTo(prevPoint.x, prevPoint.y);
+			pDC->LineTo(point.x, point.y);
+		}
+	}
+
+	pDC->SelectObject(pOldPen);
+
+	// Set mapping mode
 	pDC->SetMapMode(MM_TEXT);
 	pDC->SetGraphicsMode(GM_ADVANCED);
 
@@ -97,11 +120,11 @@ void CProjectMFCView::OnDraw(CDC* pDC)
 	CBrush newbrush;
 	CBrush* oldbrush;
 
-	CPoint scr;       //screen coordinates;
-	SIZE size1;   //client rect extension in pixels 
-	SIZE marg = { 80,80 }; //margines in pixels
+	CPoint scr;       // screen coordinates;
+	SIZE size1;       // client rect extension in pixels 
+	SIZE marg = { 80,80 }; // margin in pixels
 
-	//set font
+	// Set font
 	VERIFY(font.CreateFontIndirect(&lf));
 	CFont* def_font = pDC->SelectObject(&font);
 
@@ -123,7 +146,6 @@ void CProjectMFCView::OnDraw(CDC* pDC)
 	newbrush.DeleteObject();
 
 	DCOORD Coord(0, 0), mmin(min_x, min_y), mmax(max_x, max_y);
-	//
 	const int npoints = pDoc->pDat->size();
 
 	newpen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
@@ -134,15 +156,14 @@ void CProjectMFCView::OnDraw(CDC* pDC)
 		Coord.x = (*pDoc->pDat)[ipoint].x;
 		Coord.y = (*pDoc->pDat)[ipoint].y;
 		scr = GetScreenCoord(Coord, mmin, mmax, size1, marg, 1, 1);
-		//MY_POINT point = (*pDoc->pDat)[ipoint];
-		//COLORREF my_color = (*pDoc->pDat)[ipoint].get_color();
+
 		newbrush.CreateSolidBrush(RGB(120, 120, 120));
 		oldbrush = pDC->SelectObject(&newbrush);
 		pDC->Ellipse(scr.x + PointRad, scr.y + PointRad, scr.x - PointRad, scr.y - PointRad);
 		pDC->SelectObject(oldbrush);
 		newbrush.DeleteObject();
 
-		//Draw lines
+		// Draw lines
 		pDC->SelectObject(oldpen);
 		newpen.DeleteObject();
 		newpen.CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
@@ -156,8 +177,8 @@ void CProjectMFCView::OnDraw(CDC* pDC)
 		pDC->SelectObject(oldpen);
 		newpen.DeleteObject();
 
-		//Output text
-		str.Format("vertex %d", ipoint);
+		// Output text
+		str.Format(_T("vertex %d"), ipoint);
 		pDC->TextOut(scr.x + PointRad + 2, scr.y, str);
 	}
 
@@ -194,7 +215,6 @@ CPoint CProjectMFCView::GetScreenCoord(DCOORD Coord, DCOORD min, DCOORD max, SIZ
 
 
 // CProjectMFCView printing
-
 
 void CProjectMFCView::OnFilePrintPreview()
 {
@@ -256,7 +276,6 @@ CProjectMFCDoc* CProjectMFCView::GetDocument() const // non-debug version is inl
 
 // CProjectMFCView message handlers
 
-
 void CProjectMFCView::OnOperateInputdata()
 {
 	// TODO: Add your command handler code here
@@ -264,6 +283,3 @@ void CProjectMFCView::OnOperateInputdata()
 	CDialogInputData dlg(pDoc);
 	dlg.DoModal();
 }
-
-
-

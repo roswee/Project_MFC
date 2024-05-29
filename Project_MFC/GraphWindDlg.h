@@ -2,6 +2,7 @@
 
 #include "afxwin.h"
 #include "afxcmn.h"
+#include <afxdialogex.h>
 
 class CGraphWindDlg : public CDialogEx
 {

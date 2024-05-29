@@ -22,7 +22,14 @@ public:
 
 // Operations
 public:
+	COLORREF m_Color;
+	int m_Radius;
+	bool m_LineType;
 
+	void SetGraphSettings(COLORREF color, int radius, bool lineType);
+	COLORREF GetColor() const { return m_Color; }
+	int GetRadius() const { return m_Radius; }
+	bool GetLineType() const { return m_LineType; }
 // Overrides
 public:
 	virtual BOOL OnNewDocument();

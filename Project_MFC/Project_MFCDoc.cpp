@@ -18,6 +18,7 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+#include "GraphWindDlg.h"
 
 // CProjectMFCDoc
 
@@ -63,6 +64,32 @@ BOOL CProjectMFCDoc::OnNewDocument()
 	}
 
 	return TRUE;
+}
+
+void CProjectMFCDoc::SetGraphSettings(COLORREF color, int radius, bool lineType)
+{
+	m_Color = color;
+	m_Radius = radius;
+	m_LineType = lineType;
+}
+
+void CProjectMFCApp::OnGraphWind()
+{
+	CGraphWindDlg dlg;
+	if (dlg.DoModal() == IDOK)
+	{
+		COLORREF color = dlg.GetSelectedColor();
+		int radius = dlg.GetRadius();
+		bool lineType = dlg.GetLineType();
+
+		// Pass these settings to the document/view
+		CProjectMFCDoc* pDoc = (CProjectMFCDoc*)GetActiveDocument();
+		if (pDoc)
+		{
+			pDoc->SetGraphSettings(color, radius, lineType);
+			pDoc->UpdateAllViews(NULL);
+		}
+	}
 }
 
 

@@ -38,6 +38,7 @@ public:
 
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
+	void OnGraphWind();
 };
 
 extern CProjectMFCApp theApp;

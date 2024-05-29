@@ -26,6 +26,7 @@ BEGIN_MESSAGE_MAP(CProjectMFCApp, CWinAppEx)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
 	ON_COMMAND(ID_FILE_SAVE, &CProjectMFCApp::OnFileSave)
 	ON_COMMAND(ID_FILE_SAVE_AS, &CProjectMFCApp::OnFileSaveAs)
+	ON_COMMAND(ID_OPERATE_GRAPHWIND, &CProjectMFCApp::OnGraphWind)
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
 END_MESSAGE_MAP()
@@ -265,3 +266,4 @@ void CProjectMFCApp::OnFileSaveAs()
 		pDoc->DoSave(nullptr, true);
 	}
 }
+
