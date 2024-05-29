@@ -109,14 +109,11 @@ public:
 	void Push(const MY_POINT& tmp);
 	int size() { return last; }
 	void clear() { last = 0; }
-	void clear_all() { Free(); last = 0; capacity = 0; }
+	void clear_all();
 	void SaveToFile(const char* filename);
 	void LoadFromFile(const char* filename);
 
-	MY_POINT& operator [] (const int i)
-	{
-		return pTab[i];
-	}
+	MY_POINT& operator [] (const int i);
 
 	void GetMaxMinCoords(double& max_x, double& min_x, double& max_y, double& min_y);
 

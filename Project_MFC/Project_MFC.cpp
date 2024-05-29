@@ -24,6 +24,8 @@ BEGIN_MESSAGE_MAP(CProjectMFCApp, CWinAppEx)
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
+	ON_COMMAND(ID_FILE_SAVE, &CProjectMFCApp::OnFileSave)
+	ON_COMMAND(ID_FILE_SAVE_AS, &CProjectMFCApp::OnFileSaveAs)
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
 END_MESSAGE_MAP()
@@ -158,6 +160,19 @@ int CProjectMFCApp::ExitInstance()
 
 // CProjectMFCApp message handlers
 
+//void CProjectMFCApp::OnFileSave() {
+//    CDocument* pDoc = GetActiveDocument();
+//    if (pDoc != nullptr) {
+//        pDoc->DoFileSave();
+//    }
+//}
+//
+//void CProjectMFCApp::OnFileSaveAs() {
+//    CDocument* pDoc = GetActiveDocument();
+//    if (pDoc != nullptr) {
+//        pDoc->DoSave(nullptr, true);
+//    }
+//}
 
 // CAboutDlg dialog used for App About
 
@@ -224,3 +239,29 @@ void CProjectMFCApp::SaveCustomState()
 
 
 
+CDocument* CProjectMFCApp::GetActiveDocument()
+{
+	CFrameWnd* pFrame = (CFrameWnd*)AfxGetMainWnd();
+	if (!pFrame)
+		return nullptr;
+
+	return pFrame->GetActiveDocument();
+}
+
+void CProjectMFCApp::OnFileSave()
+{
+	CDocument* pDoc = GetActiveDocument();
+	if (pDoc != nullptr)
+	{
+		pDoc->DoFileSave();
+	}
+}
+
+void CProjectMFCApp::OnFileSaveAs()
+{
+	CDocument* pDoc = GetActiveDocument();
+	if (pDoc != nullptr)
+	{
+		pDoc->DoSave(nullptr, true);
+	}
+}

@@ -152,7 +152,11 @@ void MY_DATA::GetMaxMinCoords(double& max_x, double& min_x, double& max_y, doubl
     }
 }
 
-
+void MY_DATA::clear_all() {
+    Free();
+    last = 0;
+    capacity = 0;
+}
 
 void MY_DATA::SaveToFile(const char* filename)
 {
@@ -197,6 +201,10 @@ void MY_DATA::LoadFromFile(const char* filename)
         }
         in.close();
     }
+}
+
+MY_POINT& MY_DATA::operator[](const int i) {
+    return pTab[i];
 }
 
 

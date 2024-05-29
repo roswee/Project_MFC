@@ -1,12 +1,14 @@
-#pragma once
+#ifndef FIND_H
+#define FIND_H
 
-template<typename T>
-int Find(const T* array, int size, const T& value)
-{
-    for (int i = 0; i < size; ++i)
-    {
-        if (array[i] == value)
-            return i;
+template <class T, class Key>
+T* find(const T* p_begin, const T* p_end, const Key& k) {
+    for (const T* it = p_begin; it != p_end; ++it) {
+        if (*it == k) {
+            return const_cast<T*>(it);
+        }
     }
-    return -1;  // Return -1 if value not found
+    return nullptr;
 }
+
+#endif // FIND_H
